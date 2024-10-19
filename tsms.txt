@@ -1,0 +1,6 @@
+DATABASE_URL="postgresql://neonBaba_owner:mbjOv7PVo5LF@ep-winter-butterfly-a2d67k9d.eu-central-1.aws.neon.tech/neonBaba?sslmode=require"
+
+
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiNTQ2NTdjNmEtZWZlYS00ZjRkLTk4NzctZTlhN2UzOTQwYzU0IiwidGVuYW50X2lkIjoiNWY1Y2IxZTVkZDk5NmU2ZjA2MWQ0ZGJkZjA5NDBhMmY1NWYxYTZiZjIyMzY1NjM2NDFjYTA3ZDgzNzgxYTYxNSIsImludGVybmFsX3NlY3JldCI6IjMyZTExYWI5LTcyYzUtNDM4Yy1hZjk1LWRkM2M4MDQ4ZDJmMyJ9.R-cU8bnr-nHiwLd8ymWQdNtNXIs7p61cNWKdq-d9-aE"
+JWT_SECRET = "DHRUPSINHA"
