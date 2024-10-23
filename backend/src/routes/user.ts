@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { decode, sign, verify } from 'hono/jwt';
-import { signinInput } from "@luciferdk/medium-common";
+import { sign, } from 'hono/jwt';
+import { signupInput, signinInput } from "@luciferdk/medium-common";
 
 
 // Create the main Hono app
@@ -17,11 +17,11 @@ export const userRouter = new Hono<{
 
 userRouter.post('/signup', async (c) => {
 	const body = await c.req.json();
-	const { success } = signinInput.safeParse(body);
+	const { success } = signupInput.safeParse(body);
 	if (!success) {
 		c.status(411);
 		return c.json({
-			msg: "Input type is not valid"
+			msg: "Inputs is not valid"
 		})
 	}
 
@@ -42,20 +42,27 @@ userRouter.post('/signup', async (c) => {
 		const jwt = await sign({
 			id: user.id
 		}, c.env.JWT_SECRET);
-		return c.json({ jwt });
+		return c.text(jwt);
 		/* return c.json("signuped"); */
 	} catch (e) {
 		c.status(403);
-		return c.json({ error: "user already exist signup" })
+		return c.text('invalid')
 	}
 })
 
-userRouter.post('/api/user/signin', async (c) => {
+userRouter.post('/signin', async (c) => {
+	const body = await c.req.json();
+	const { success } = signinInput.safeParse(body);
+	if (!success) {
+		c.status(411);
+		return c.json({
+			message: "Inputs not Correct"
+		})
+	}
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env.DATABASE_URL, // Access DATABASE_URL from env
 	}).$extends(withAccelerate())
 
-	const body = await c.req.json();
 	//const hashedPassword = await bcrypt.hash(password, 10),
 
 	try {
@@ -67,17 +74,17 @@ userRouter.post('/api/user/signin', async (c) => {
 		});
 		if (!user) {
 			c.status(403);
-			return c.text("user not exist's")
+			return c.text("user not exist")
 		}
 
 		const jwt = await sign({
 			id: user.id
 		}, c.env.JWT_SECRET);
-		return c.json({ jwt });
+		return c.text(jwt);
 
 	} catch (e) {
 		c.status(411);
-		return c.json({ error: "user already exist signup" })
+		return c.text('Invalid')
 	}
 })
 
