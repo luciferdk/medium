@@ -89,3 +89,10 @@ userRouter.post('/signin', async (c) => {
 })
 
 
+/**
+ * {
+    "email": "dhrupkumarsinha@gmail.com",
+   "password" : "9876543231",
+   "fullName": "rajabhyaa"
+}
+ */
