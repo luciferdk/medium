@@ -38,7 +38,7 @@ export const BlogCard = ({
 }
 
 
-function Circle() {
+export function Circle() {
     return <div className="flex justify-center flex-col h-1 w-1 rounded-full bg-slate-300">
 
     </div>
