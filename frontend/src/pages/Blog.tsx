@@ -11,7 +11,7 @@ export const Blog = () => {
         id: id || ""
     });
 
-    if (loading) {
+    if (loading || !blog) {
         return <div>
             <Appbar/>
             <div className="h-dvh h-sceen flex flex-col justify-center">
