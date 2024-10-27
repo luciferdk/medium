@@ -92,6 +92,7 @@ blogRouter.get('/bulk', async (c) => {
         select: {
             content: true,
             title: true,
+            createdAt: true,
             id: true,
             author: {
                 select: {
@@ -122,6 +123,7 @@ blogRouter.get('/:id', async (c) => {
                 id: true,
                 title: true,
                 content: true,
+                createdAt: true,
                 author: {
                     select: {
                         fullName: true

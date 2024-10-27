@@ -27,6 +27,7 @@ model Blog {
   title     String
   content   String
   authorName String?
+  createdAt DateTime @default(now())  // sets default to current date & time
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String

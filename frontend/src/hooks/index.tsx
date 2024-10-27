@@ -5,6 +5,7 @@ import axios from "axios";
 
 
 export interface Blog {
+    "createdAt": string;
     "content": string;
     "title": string;
     "id": string
