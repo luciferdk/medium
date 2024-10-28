@@ -4,6 +4,10 @@ import { Avatar } from "./BlogCard";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
 
+     // Convert `createdAt` to IST format
+     const createdAtIST = new Date(blog.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+
     return <div>
         <Appbar />
         <div className="flex justify-center">
@@ -13,7 +17,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         {blog.title}
                     </div>
                     <div className="text-slate-500 pt-2">
-                        {blog.createdAt}
+                        {createdAtIST}
                     </div>
                     <div className="pt-4">
                         {blog.content}
