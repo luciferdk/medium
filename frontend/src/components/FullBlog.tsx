@@ -13,7 +13,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         {blog.title}
                     </div>
                     <div className="text-slate-500 pt-2">
-                        Post on 2nd Decembaer 2023
+                        {blog.createdAt}
                     </div>
                     <div className="pt-4">
                         {blog.content}
@@ -32,7 +32,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                                 {blog.author.fullName || "Anonymous"}
                             </div>
                             <div className="pt-2 text-slate-500">
-                                Rand catch phrase about the author's ability to grab user's attentation
+                                {blog.author.bio || "Write somthing for your bio"}
                             </div>
                         </div>
                     </div>
