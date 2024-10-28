@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, } from 'hono/jwt';
 import { signupInput, signinInput } from "@luciferdk/medium-common";
+import { updateBio } from "@luciferdk/medium-common";
 
 
 // Create the main Hono app
@@ -87,6 +88,34 @@ userRouter.post('/signin', async (c) => {
 		return c.text('Invalid')
 	}
 })
+
+
+
+
+//update userInfo
+userRouter.put('/biography', async (c) => {
+    const body = await c.req.json();
+	
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+
+    const biography = await prisma.user.update({
+        where: {
+            id: body.id
+        },
+        data: {
+            fullName: body.fullName,
+			bio: body.bio,
+
+        }
+    })
+
+    return c.json({
+        id: biography.id
+    })
+})
+
 
 
 /**

@@ -126,7 +126,8 @@ blogRouter.get('/:id', async (c) => {
                 createdAt: true,
                 author: {
                     select: {
-                        fullName: true
+                        fullName: true,
+                        bio: true,
                     }
                 }
             }
