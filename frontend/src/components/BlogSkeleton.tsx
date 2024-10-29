@@ -1,6 +1,6 @@
 
 export const BlogSkeleton = () => {
-    return <div className="flex justify-center w-full mt-20">
+    return <div className="flex justify-center w-full mt-5">
         <div className="border-b border-slate-200 pb-2 p-4 w-screen max-w-screen-md">
             <div className="flex animate-pulse">
 

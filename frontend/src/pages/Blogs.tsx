@@ -7,7 +7,7 @@ import { useBlogs } from "../hooks";
 
 export const Blogs = () => {
     const { loading, blogs } = useBlogs();
-    if (loading) {
+    //if (loading) {
         return <div>
             <Appbar />
             <BlogSkeleton />
@@ -15,7 +15,7 @@ export const Blogs = () => {
             <BlogSkeleton />
             <BlogSkeleton />
         </div>
-    }
+   // }
     return <div >
         <Appbar />
         <div className="flex justify-center">
