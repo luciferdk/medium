@@ -15,7 +15,7 @@ export const userRouter = new Hono<{
 }>();
 
 
-
+//signup endpoint
 userRouter.post('/signup', async (c) => {
 	const body = await c.req.json();
 	const { success } = signupInput.safeParse(body);
@@ -51,6 +51,8 @@ userRouter.post('/signup', async (c) => {
 	}
 })
 
+
+//signin routes
 userRouter.post('/signin', async (c) => {
 	const body = await c.req.json();
 	const { success } = signinInput.safeParse(body);
@@ -92,29 +94,61 @@ userRouter.post('/signin', async (c) => {
 
 
 
-//update userInfo
-userRouter.put('/biography', async (c) => {
-    const body = await c.req.json();
+interface UserUpdatePayload {
+	bio?: string;
+	fullName?: string;
+  }
+  
+  // Get user's bio and full name
+  userRouter.get('/:id', async (c) => {
 	
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate())
+	const prisma = new PrismaClient({
+		datasourceUrl: c.env.DATABASE_URL, // Access DATABASE_URL from env
+	}).$extends(withAccelerate())
+	
+	const userId = c.req.param('id');
+  
+	try {
+	  const user = await prisma.user.findUnique({
+		where: { id: userId },
+		select: { bio: true, fullName: true },
+	  });
+  
+	  if (!user) {
+		return c.json({ error: 'User not found' }, 404);
+	  }
+  
+	  return c.json({ bio: user.bio, fullName: user.fullName });
+	} catch (error) {
+	  return c.json({ error: 'Error fetching user data' }, 500);
+	}
+  });
+  
+  // Update user's bio and full name
+  userRouter.put('/:id', async (c) => {
+	const prisma = new PrismaClient({
+		datasourceUrl: c.env.DATABASE_URL, // Access DATABASE_URL from env
+	}).$extends(withAccelerate())
 
-    const biography = await prisma.user.update({
-        where: {
-            id: body.id
-        },
-        data: {
-            fullName: body.fullName,
-			bio: body.bio,
 
-        }
-    })
-
-    return c.json({
-        id: biography.id
-    })
-})
+	const userId = c.req.param('id');
+	const data: UserUpdatePayload = await c.req.json();
+  
+	try {
+	  const updatedUser = await prisma.user.update({
+		where: { id: userId },
+		data: {
+		  bio: data.bio || undefined,
+		  fullName: data.fullName || undefined,
+		},
+	  });
+  
+	  return c.json({ message: 'User updated successfully', user: updatedUser });
+	} catch (error) {
+	  return c.json({ error: 'Error updating user data' }, 500);
+	}
+  });
+  
 
 
 
